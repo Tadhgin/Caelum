@@ -2,7 +2,7 @@ import os
 import random
 import time
 import datetime
-from ollama_client import OllamaClient
+from ollama import Client as OllamaClient
 
 # Setup
 directories = ["logs", "memory"]
@@ -69,8 +69,15 @@ def generate_thought():
     )
 
     try:
-        reply = ollama.prompt(prompt, system_message=system_msg)
-        return prompt, reply.strip()
+        response = ollama.chat(
+            model="mistral",  # or "llama3" depending on what model Caelum uses
+            messages=[
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": prompt}
+            ]
+        )
+        reply = response['message']['content'].strip()
+        return prompt, reply
     except Exception as e:
         return prompt, f"Error generating reply: {e}"
 
