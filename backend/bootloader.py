@@ -1,6 +1,6 @@
 import json
 from core.prompt_engine import build_prompt
-from backend.llm_connector import LLMConnector
+from core.llm_connector import LLMConnector
 
 # Load core files
 with open("soul/core_identity.json") as f:
